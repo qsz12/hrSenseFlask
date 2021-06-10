@@ -2,10 +2,9 @@ from flask import Flask,request
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from models import Employee
+from models import Employee,Base
 
 app=Flask(__name__)
-Base=declarative_base()
 
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:password@localhost/job'
 engine = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
