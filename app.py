@@ -26,9 +26,10 @@ def index():
 def create():
     try:
         data=request.get_json()
-        print('\n\n\n',data,'\n\n\n')
 
-        title=data.get('title',"")
+        # print('\n\n\n',data,'\n\n\n')
+
+        title=data.get('title')
         dept=data.get('department',"")
         country=data.get('country',"")
         state=data.get('state',"")
@@ -47,7 +48,7 @@ def create():
         salary_to=data.get('salary_to',0)
         currency=data.get('currency',"indian rupee")
 
-        if title=="":
+        if title==None:
             raise Exception('ERROR title is empty')
         if exp==None:
             raise Exception('ERROR experience is empty')
@@ -65,7 +66,7 @@ def dele(id):
     try:
         emp=sess.query(Employee).filter_by(id=id).first()
         if emp==None:
-            return "User Doesn't Exist!!!"
+            return "User Doesn't Exist!"
         sess.delete(emp)
         sess.commit()
         return "Deleted!!!"
@@ -78,7 +79,8 @@ def update_data(id):
     try:
         emp=sess.query(Employee).filter_by(id=id).first()
         data=request.get_json()
-        print('\n\n\n',data,'\n\n\n')
+
+        # print('\n\n\n',data,'\n\n\n')
 
         if data.get('title'):
             emp.title=data.get('title')
@@ -118,7 +120,7 @@ def update_data(id):
             emp.currency=data.get('currency')    
 
         sess.commit()
-        return "Updatedddd!!!"
+        return "Updatedddd!"
     except Exception as e:
         return {"error":str(e)}
 
@@ -128,7 +130,7 @@ def fet(id):
     try:
         emp=sess.query(Employee).filter_by(id=id).first()
         if emp==None:
-            return "User Doesn't Exist!!!"
+            return "User Doesn't Exist!"
         return {"id":id,"data":{"title":emp.title,"dept":emp.department,"country":emp.country,"state":emp.state,"city":emp.city,"remote":emp.remote,"description":emp.description,"requirements":emp.requirements,"benifit":emp.benifits,"comind":emp.company_industry,"job_fun":emp.job_function,"employment_type":emp.employment_type,"experience":emp.experience,"education":emp.education,"keywords":emp.keywords,"salaryFrom":emp.salary_from,"salaryTo":emp.salary_to,"currency":emp.currency}}
     except Exception as e:
         return {"Error":str(e)}
